@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="module_antaeus" default="compile.module.antaeus">
+  <dirname property="module.antaeus.basedir" file="${ant.file.module_antaeus}"/>
+  
+  <property name="module.jdk.home.antaeus" value="${project.jdk.home}"/>
+  <property name="module.jdk.bin.antaeus" value="${project.jdk.bin}"/>
+  <property name="module.jdk.classpath.antaeus" value="${project.jdk.classpath}"/>
+  
+  <property name="compiler.args.antaeus" value="-encoding UTF-8 -source 11 -target 11 ${compiler.args}"/>
+  
+  <property name="antaeus.output.dir" value="${module.antaeus.basedir}/out/production/antaeus"/>
+  <property name="antaeus.testoutput.dir" value="${module.antaeus.basedir}/out/test/antaeus"/>
+  
+  <path id="antaeus.module.bootclasspath">
+    <!-- Paths to be included in compilation bootclasspath -->
+  </path>
+  
+  <path id="antaeus.module.production.classpath"/>
+  
+  <path id="antaeus.runtime.production.module.classpath">
+    <pathelement location="${antaeus.output.dir}"/>
+  </path>
+  
+  <path id="antaeus.module.classpath">
+    <pathelement location="${antaeus.output.dir}"/>
+  </path>
+  
+  <path id="antaeus.runtime.module.classpath">
+    <pathelement location="${antaeus.testoutput.dir}"/>
+    <pathelement location="${antaeus.output.dir}"/>
+  </path>
+  
+  
+  <patternset id="excluded.from.module.antaeus">
+    <patternset refid="ignored.files"/>
+  </patternset>
+  
+  <patternset id="excluded.from.compilation.antaeus">
+    <patternset refid="excluded.from.module.antaeus"/>
+  </patternset>
+  
+  
+  <target name="compile.module.antaeus" depends="compile.module.antaeus.production,compile.module.antaeus.tests" description="Compile module antaeus"/>
+  
+  <target name="compile.module.antaeus.production" depends="register.custom.compilers" description="Compile module antaeus; production classes"/>
+  
+  <target name="compile.module.antaeus.tests" depends="register.custom.compilers,compile.module.antaeus.production" description="compile module antaeus; test classes" unless="skip.tests"/>
+  
+  <target name="clean.module.antaeus" description="cleanup module">
+    <delete dir="${antaeus.output.dir}"/>
+    <delete dir="${antaeus.testoutput.dir}"/>
+  </target>
+</project>

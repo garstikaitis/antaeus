@@ -9,6 +9,7 @@
 package io.pleo.antaeus.core.external
 
 import io.pleo.antaeus.models.Invoice
+import mu.KotlinLogging
 
 interface PaymentProvider {
     /*
@@ -24,5 +25,7 @@ interface PaymentProvider {
           `NetworkException`: when a network error happens.
      */
 
-    fun charge(invoice: Invoice): Boolean
+    fun charge(invoice: Invoice): Boolean {
+        return true
+    }
 }

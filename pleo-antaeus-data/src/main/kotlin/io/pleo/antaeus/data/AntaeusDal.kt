@@ -70,6 +70,14 @@ class AntaeusDal(private val db: Database) {
         }
     }
 
+    fun fetchPendingInvoices() : List<Invoice> {
+        return transaction(db) {
+            InvoiceTable
+                    .select { InvoiceTable.status.eq("PENDING") }
+                    .map { it.toInvoice() }
+        }
+    }
+
     fun createCustomer(currency: Currency): Customer? {
         val id = transaction(db) {
             // Insert the customer and return its new id.
