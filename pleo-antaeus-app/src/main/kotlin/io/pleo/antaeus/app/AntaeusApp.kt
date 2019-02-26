@@ -54,7 +54,7 @@ fun main() {
     // Create core services
     val invoiceService = InvoiceService(dal = dal)
     val customerService = CustomerService(dal = dal)
-    val billingService = BillingService(invoiceService = invoiceService)
+    val billingService = BillingService(invoiceService = invoiceService, dal = dal)
 
     // This is _your_ billing service to be included where you see fit
     // Create REST web service

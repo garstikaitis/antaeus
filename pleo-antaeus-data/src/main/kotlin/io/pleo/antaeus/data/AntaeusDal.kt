@@ -12,12 +12,11 @@ import io.pleo.antaeus.models.Customer
 import io.pleo.antaeus.models.Invoice
 import io.pleo.antaeus.models.InvoiceStatus
 import io.pleo.antaeus.models.Money
-import org.jetbrains.exposed.sql.Database
-import org.jetbrains.exposed.sql.insert
-import org.jetbrains.exposed.sql.select
-import org.jetbrains.exposed.sql.selectAll
+import mu.KotlinLogging
+import org.jetbrains.exposed.sql.*
 import org.jetbrains.exposed.sql.transactions.transaction
 
+private val logger = KotlinLogging.logger {}
 class AntaeusDal(private val db: Database) {
     fun fetchInvoice(id: Int): Invoice? {
         // transaction(db) runs the internal query as a new database transaction.
@@ -70,12 +69,21 @@ class AntaeusDal(private val db: Database) {
         }
     }
 
-    fun fetchPendingInvoices() : List<Invoice> {
+    fun fetchInvoicesByStatus(status: InvoiceStatus) : List<Invoice> {
         return transaction(db) {
             InvoiceTable
-                    .select { InvoiceTable.status.eq("PENDING") }
+                    .select { InvoiceTable.status.eq(status.toString()) }
                     .map { it.toInvoice() }
         }
+    }
+
+    fun updateInvoiceStatus(invoice: Invoice, status: InvoiceStatus) : Invoice? {
+        transaction(db) {
+            InvoiceTable.update({ InvoiceTable.id.eq(invoice.id) }) {
+                it[this.status] = status.toString()
+            }
+        }
+        return invoice
     }
 
     fun createCustomer(currency: Currency): Customer? {

@@ -15,7 +15,6 @@ import mu.KotlinLogging
 
 private val logger = KotlinLogging.logger {}
 
-
 class AntaeusRest (
     private val invoiceService: InvoiceService,
     private val customerService: CustomerService,
