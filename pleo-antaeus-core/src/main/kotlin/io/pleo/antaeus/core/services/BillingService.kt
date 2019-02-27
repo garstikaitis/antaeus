@@ -14,15 +14,19 @@ class BillingService(private val invoiceService: InvoiceService,
                      private val dal: AntaeusDal,
                      private val paymentProvider: PaymentProvider) : IDateTime, PaymentProvider {
    fun run() : Response {
-       var invoices = getPendingInvoices()
-       invoices.forEach { charge(it) }
-       var response = Response(statusCode = 200, message = "Successfuly updated ${invoices.count()} invoices", data = invoices)
-       return response
+       if(isFirstDayOfTheMonth()) {
+           var invoices = getPendingInvoices()
+           invoices.forEach { charge(it) }
+           var response = Response(statusCode = 200, message = "Successfuly updated ${invoices.count()} invoices", data = dal.fetchInvoices())
+           return response
+       } else {
+           var response = Response(statusCode = 200, message = "Try again next day!", data = emptyList())
+           return response
+       }
    }
 
     fun getPendingInvoices() : List<Invoice> {
-        var pendingInvoices: List<Invoice> = invoiceService.fetchInvoicesByStatus(InvoiceStatus.PENDING)
-        return pendingInvoices
+        return invoiceService.fetchInvoicesByStatus(InvoiceStatus.PENDING)
     }
 
     private fun beginPaymentProcess(invoice: Invoice) : Invoice? {

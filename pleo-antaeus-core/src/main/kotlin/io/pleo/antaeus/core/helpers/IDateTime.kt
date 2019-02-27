@@ -4,6 +4,9 @@ import java.time.LocalDateTime
 
 interface IDateTime {
     fun isFirstDayOfTheMonth() : Boolean{
-        return LocalDateTime.now().dayOfMonth == 1
+        if(System.getenv("TEST_ENV").toBoolean()) {
+            return true
+        }
+        return LocalDateTime.now().dayOfMonth == System.getenv("CURRENT_DAY").toInt()
     }
 }
