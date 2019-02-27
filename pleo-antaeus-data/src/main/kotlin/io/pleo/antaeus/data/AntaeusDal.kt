@@ -15,6 +15,7 @@ import io.pleo.antaeus.models.Money
 import mu.KotlinLogging
 import org.jetbrains.exposed.sql.*
 import org.jetbrains.exposed.sql.transactions.transaction
+import java.math.BigDecimal
 
 private val logger = KotlinLogging.logger {}
 class AntaeusDal(private val db: Database) {
