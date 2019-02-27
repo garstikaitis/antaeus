@@ -1,0 +1,70 @@
+export const styles = {
+  container: {
+    width: '1200px',
+    margin: '0 auto',
+    fontFamily: `'Roboto', sans-serif`,
+  },
+  row: {
+    display: 'flex',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    button: {
+      color: 'white',
+      backgroundColor: '#FF3366',
+      borderRadius: 31,
+      padding: '15px 23px',
+      height: 50,
+      fontWeight: 700,
+      cursor: 'pointer',
+    },
+  },
+  floater: {
+    backgroundColor: '#FF3366',
+    color: 'white',
+    backgroundColor: '#FF3366',
+    borderRadius: 31,
+    padding: '15px 23px',
+    fontWeight: 700,
+    cursor: 'pointer',
+    position: 'fixed',
+    bottom: 30,
+    right: 100,
+  },
+  table: {
+    width: '100%',
+    textAlign: 'left',
+    thead: {
+      marginBottom: 30,
+      display: 'flex',
+      justifyContent: 'space-around',
+      element: {
+        width: '100%',
+        textAlign: 'left',
+        fontWeight: 700,
+        opacity: 0.6,
+        cursor: 'pointer',
+      },
+    },
+    tbody: {
+      width: 'inherit',
+      row: {
+        display: 'flex',
+        justifyContent: 'space-around',
+        element: {
+          width: '100%',
+          textAlign: 'left',
+          padding: '15px 0',
+          display: 'flex',
+          alignItems: 'center',
+          color: '#292f3a',
+          fontSize: 14,
+          img: {
+            borderRadius: '50%',
+            width: '30%',
+            marginRight: 10,
+          },
+        },
+      },
+    },
+  },
+};

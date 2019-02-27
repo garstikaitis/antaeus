@@ -43,6 +43,7 @@ class AntaeusRest (
 
     init {
         // Set up URL endpoints for the rest app
+        app.enableCorsForAllOrigins()
         app.routes {
            path("rest") {
                // Route to check whether the app is running

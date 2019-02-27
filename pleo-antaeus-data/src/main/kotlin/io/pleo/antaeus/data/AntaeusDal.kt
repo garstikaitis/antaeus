@@ -34,6 +34,7 @@ class AntaeusDal(private val db: Database) {
         return transaction(db) {
             InvoiceTable
                 .selectAll()
+
                 .map { it.toInvoice() }
         }
     }

@@ -46,7 +46,7 @@ class BillingServiceTest {
 
     @Test
     fun `will not charge customers if it is not first day of the month`() {
-        var testResponse = Response(statusCode = 200, message = "Try again tomorrow", data = emptyList())
+        var testResponse = Response(statusCode = 500, message = "Try again tomorrow", data = emptyList())
         val billingService = mockk<BillingService> {
             every { isFirstDayOfTheMonth() } returns false
             every { run() } returns testResponse

@@ -21,7 +21,7 @@ class BillingService(private val dal: AntaeusDal,
            var response = Response(statusCode = 200, message = "Successfuly updated ${invoices.count()} invoices", data = dal.fetchInvoices())
            return response
        } else {
-           var response = Response(statusCode = 200, message = "Try again next day!", data = emptyList())
+           var response = Response(statusCode = 500, message = "Try again next day!", data = emptyList())
            return response
        }
    }
