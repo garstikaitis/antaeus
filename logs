@@ -2,7 +2,7 @@ SQL: DROP TABLE IF EXISTS Invoice
 SQL: DROP TABLE IF EXISTS Customer
 SQL: CREATE TABLE IF NOT EXISTS Customer (id INTEGER PRIMARY KEY, currency VARCHAR(3) NOT NULL)
 SQL: CREATE TABLE IF NOT EXISTS Invoice (id INTEGER PRIMARY KEY, currency VARCHAR(3) NOT NULL, "value" DECIMAL(1000, 2) NOT NULL, customer_id INT NOT NULL, status TEXT NOT NULL,  FOREIGN KEY (customer_id) REFERENCES Customer(id) ON DELETE RESTRICT ON UPDATE RESTRICT)
-[main] INFO org.eclipse.jetty.util.log - Logging initialized @5412ms to org.eclipse.jetty.util.log.Slf4jLog
+[main] INFO org.eclipse.jetty.util.log - Logging initialized @5651ms to org.eclipse.jetty.util.log.Slf4jLog
 [main] INFO io.javalin.Javalin - 
  _________________________________________
 |        _                  _ _           |
@@ -18,10 +18,10 @@ SQL: CREATE TABLE IF NOT EXISTS Invoice (id INTEGER PRIMARY KEY, currency VARCHA
 [main] INFO org.eclipse.jetty.server.Server - jetty-9.4.14.v20181114; built: 2018-11-14T21:20:31.478Z; git: c4550056e785fb5665914545889f21dc136ad9e6; jvm 11.0.2+9-LTS
 [main] INFO org.eclipse.jetty.server.session - DefaultSessionIdManager workerName=node0
 [main] INFO org.eclipse.jetty.server.session - No SessionScavenger set, using defaults
-[main] INFO org.eclipse.jetty.server.session - node0 Scavenging every 600000ms
-[main] INFO org.eclipse.jetty.server.handler.ContextHandler - Started i.j.c.u.@74518890{/,null,AVAILABLE}
-[main] INFO org.eclipse.jetty.server.handler.ContextHandler - Started o.e.j.s.ServletContextHandler@62d0ac62{/,null,AVAILABLE}
-[main] INFO org.eclipse.jetty.server.AbstractConnector - Started ServerConnector@72611d77{HTTP/1.1,[http/1.1]}{0.0.0.0:7000}
-[main] INFO org.eclipse.jetty.server.Server - Started @5723ms
+[main] INFO org.eclipse.jetty.server.session - node0 Scavenging every 660000ms
+[main] INFO org.eclipse.jetty.server.handler.ContextHandler - Started i.j.c.u.@4c5204af{/,null,AVAILABLE}
+[main] INFO org.eclipse.jetty.server.handler.ContextHandler - Started o.e.j.s.ServletContextHandler@150d80c4{/,null,AVAILABLE}
+[main] INFO org.eclipse.jetty.server.AbstractConnector - Started ServerConnector@4604b900{HTTP/1.1,[http/1.1]}{0.0.0.0:7000}
+[main] INFO org.eclipse.jetty.server.Server - Started @5966ms
 [main] INFO io.javalin.Javalin - Jetty is listening on: [http://localhost:7000/]
 [main] INFO io.javalin.Javalin - Javalin has started \o/

@@ -28,12 +28,6 @@ class InvoiceServiceTest {
         every { fetchInvoicesByStatus(InvoiceStatus.PENDING) } returns listOfInvoices.filter { it.status.equals(InvoiceStatus.PENDING) }
     }
 
-    private val paymentProvider = mockk<PaymentProvider> {
-        var money = Money(BigDecimal.TEN, Currency.SEK)
-        var pendingInvoice = Invoice(id = 1001, customerId = 20, amount = money, status = InvoiceStatus.PENDING)
-        every { charge(invoice = pendingInvoice) } returns true
-    }
-
     private val invoiceService = InvoiceService(dal = dal)
 
     @Test

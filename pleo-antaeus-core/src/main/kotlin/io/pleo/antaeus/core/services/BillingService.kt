@@ -1,6 +1,8 @@
 package io.pleo.antaeus.core.services
 
+import io.pleo.antaeus.core.exceptions.CurrencyMismatchException
 import io.pleo.antaeus.core.external.PaymentProvider
+import io.pleo.antaeus.core.helpers.ExceptionWrapper
 import io.pleo.antaeus.core.helpers.IDateTime
 import io.pleo.antaeus.core.helpers.Response
 import io.pleo.antaeus.data.AntaeusDal
@@ -10,9 +12,8 @@ import mu.KotlinLogging
 
 
 private val logger = KotlinLogging.logger {}
-class BillingService(private val invoiceService: InvoiceService,
-                     private val dal: AntaeusDal,
-                     private val paymentProvider: PaymentProvider) : IDateTime, PaymentProvider {
+class BillingService(private val dal: AntaeusDal,
+                     private val paymentProvider: PaymentProvider) : IDateTime, PaymentProvider, ExceptionWrapper {
    fun run() : Response {
        if(isFirstDayOfTheMonth()) {
            var invoices = getPendingInvoices()
@@ -26,18 +27,18 @@ class BillingService(private val invoiceService: InvoiceService,
    }
 
     fun getPendingInvoices() : List<Invoice> {
-        return invoiceService.fetchInvoicesByStatus(InvoiceStatus.PENDING)
+        return dal.fetchInvoicesByStatus(InvoiceStatus.PENDING)
     }
 
-    private fun beginPaymentProcess(invoice: Invoice) : Invoice? {
+    fun beginPaymentProcess(invoice: Invoice) : Invoice? {
         return dal.updateInvoiceStatus(invoice = invoice, status = InvoiceStatus.STARTED)
     }
 
-    private fun acceptPayment(invoice: Invoice) : Invoice? {
+    fun acceptPayment(invoice: Invoice) : Invoice? {
         return dal.updateInvoiceStatus(invoice = invoice, status = InvoiceStatus.PAID)
     }
 
-    private fun rejectPayment(invoice: Invoice, error: String) : String {
+    fun rejectPayment(invoice: Invoice, error: String) : String {
         dal.updateInvoiceStatus(invoice = invoice, status = InvoiceStatus.REJECTED)
         return error
     }
@@ -50,6 +51,8 @@ class BillingService(private val invoiceService: InvoiceService,
             else rejectPayment(invoice = invoice, error = "Probably insufficient balance for ${invoice.customerId}")
             return status
         } catch (e: Exception) {
+            raise(e)
+            logger.error { "Error occured while charging customer - ${invoice.customerId} because following exception was thrown ${e}" }
             return false
         }
     }
